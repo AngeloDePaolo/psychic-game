@@ -1,17 +1,62 @@
+<!-- Alex questions: commas after letters?    whether showing 0 guesses is needed at all? if not, how to code that? -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="assets/css/reset.css">
-    <title>Word Guess Game</title>
+    <title>Psychic Game</title>
 </head>
 
 <body>
-    
-<script src="assets/javascript/game.js"></script>
+<h1>The Psychic Game</h1>
+<h3 id="announcement">Guess what letter I'm thinking of...</h3>
+<p id="winCounter">Wins: 0</p>
+<p id="lossesCounter">Losses: 0 </p>
+<p id="guessLeftCounter">Guesses Left: </p>
+<p id="guessMadeCounter">Your guesses so far: </p>
 
+
+
+<script>
+
+var winCounter = 0;
+var lossesCounter = 0;
+var guessLeftCounter = 10;
+var guessMadeCounter = "";
+
+var letters = "abcdefghijklmnopqrstuvwxyz";
+var randomLetter = Math.floor(Math.random() * 26);
+
+function reset (){
+    guessLeftCounter = 10;
+    guessMadeCounter = "";
+    randomLetter = Math.floor(Math.random() * 26);
+}
+
+document.onkeyup = function (event){
+if (event.key === letters [randomLetter]) {   //Alex, what is this line?????   please explain this sorcery
+    document.getElementById("winCounter").innerHTML = "Wins: " + ++winCounter;
+    document.getElementById("announcement").innerHTML =  "Congrats, you won!";
+    reset();
+}
+
+else if (event.key !== letters [randomLetter] && guessLeftCounter > 0) {
+    document.getElementById("guessLeftCounter").innerHTML = "Guesses Left: " + --guessLeftCounter;
+    guessMadeCounter += event.key;
+    document.getElementById("guessMadeCounter").innerHTML = "Your guesses so far: " + guessMadeCounter;
+}
+
+else {
+    document.getElementById("lossesCounter").innerHTML = "Losses: " + ++lossesCounter;
+    document.getElementById("announcement").innerHTML =  "Sorry, you lost. Play again!";
+    reset();
+}
+}
+
+</script>
 
 </body>
 </html>
